@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interesseliste – framtidig spørreundersøkelse</title>
+  <style>
+    :root {
+      --varsom-orange: #ff5f1b;
+      --varsom-orange-light: #ffdfba;
+      --varsom-orange-dark: #f44900;
+      --varsom-blue-dark: #00364e;
+      --varsom-blue: #00425f;
+      --varsom-blue-light-4: #006b99;
+      --varsom-blue-light-3: #43a9d5;
+      --varsom-blue-light-2: #a6d8ee;
+      --varsom-blue-light-1: #dff1f9;
+      --text: #18323f;
+      --muted: #5a6e79;
+      --border: #cfe3ec;
+      --bg: #f7fbfd;
+      --white: #ffffff;
+      --shadow: 0 12px 32px rgba(0, 54, 78, 0.10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, Source Sans Pro, Arial, sans-serif;
+      background:
+        linear-gradient(180deg, var(--varsom-blue-light-1) 0%, #eef7fb 42%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 760px;
+      background: var(--white);
+      border: 1px solid rgba(0, 66, 95, 0.10);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--varsom-blue-dark) 0%, var(--varsom-blue) 100%);
+      color: var(--white);
+      padding: 28px 28px 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand img {
+      width: 30px;
+      height: 30px;
+      display: block;
+      border-radius: 6px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 60ch;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 1.02rem;
+    }
+
+    .content {
+      padding: 28px;
+    }
+
+    .info-box {
+      background: var(--varsom-orange-light);
+      border-left: 5px solid var(--varsom-orange);
+      color: #5e2507;
+      padding: 16px 18px;
+      border-radius: 14px;
+      margin-bottom: 24px;
+    }
+
+    .info-box strong { color: #4d1d04; }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--varsom-blue-dark);
+      font-size: 0.98rem;
+    }
+
+    .help {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: -2px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      color: var(--text);
+      font: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.02s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--varsom-blue-light-4);
+      box-shadow: 0 0 0 4px rgba(67, 169, 213, 0.20);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .consent {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: var(--varsom-blue-light-1);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .consent input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--varsom-orange);
+      flex: 0 0 auto;
+      padding: 0;
+    }
+
+    .consent label {
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      background: var(--varsom-orange);
+      color: var(--white);
+      font: inherit;
+      font-weight: 800;
+      padding: 14px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 18px rgba(244, 73, 0, 0.22);
+    }
+
+    button:hover { background: var(--varsom-orange-dark); }
+    button:active { transform: translateY(1px); }
+
+    .fineprint {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #e6f0f5;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .required { color: var(--varsom-orange-dark); }
+
+    @media (max-width: 700px) {
+      .hero, .content { padding: 22px; }
+      .grid { grid-template-columns: 1fr; }
+      .brand { margin-bottom: 14px; }
+      .actions { align-items: stretch; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="card">
+      <section class="hero">
+        <h1>Kan vi kontakte deg senere?</h1>
+        <p class="lead">
+          Du vil få tilsendt en epost med lenke til spørreundersøkelsen i løpet av mars. Estimert tidsbruk er ~5 minutter.        </p>
+      </section>
+
+      <section class="content">
+        <div class="info-box">
+          <strong>Bakgrunn:</strong> Vi ønsker å spørre folk som kjenner et område godt – guider, skredobservatører, lokalkjente, ivrige mosjonister osv. – om å anslå hvor mange som gikk på topptur i regionen deres rundt år 2005, 2015 og 2025. Når flere slike vurderinger kombineres statistisk, kan vi (forhåpentligvis) få et rimelig godt bilde av utviklingen over tid.
+
+        </div>
+
+        <form action="https://formspree.io/f/xqeygaoa" method="POST">
+          <input type="hidden" name="_subject" value="Påmelding" />
+          <input type="hidden" name="form_name" value="Påmelding" />
+
+          <div class="grid">
+            <div class="field">
+              <label for="name">Navn <span class="required">*</span></label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Ola Nordmann" required/>
+            </div>
+
+            <div class="field">
+              <label for="email">E-post <span class="required">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="navn@epost.no" required />
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="region">Region / område <span class="required">*</span></label>
+              <input id="region" name="region" type="text" placeholder="For eksempel Tromsø eller Jotunheimen" required/>
+              <div class="help">Valgfritt, men nyttig for å forstå hvilket område du kjenner best.</div>
+            </div>
+
+            <div class="field">
+              <label for="experience">Drevet aktivt med topptur siden <span class="required">*</span></label>
+              <select id="experience" name="experience">
+                <option value="">Velg</option>
+                <option>Før 2005</option>
+                <option>2005–2010</option>
+                <option>2010–2015</option>
+                <option>2015–2020</option>
+                <option>2020 eller senere</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="consent">
+            <input id="consent" name="consent" type="checkbox" value="Ja" required />
+            <label for="consent">
+              Jeg samtykker til at e-postadressen min lagres for å kunne bli kontaktet senere om denne spørreundersøkelsen. <span class="required">*</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Meld meg på</button>
+            <div class="fineprint">
+              Felter merket med <span class="required">*</span> er obligatoriske.
+              Skjemaet sendes via Formspree til den oppgitte mottakeren.
+            </div>
+          </div>
+        </form>
+
+        <div class="footer-note">
+          Spørsmål? Ta kontakt med <a href="mailto:htla@nve.no">Håvard Boutera Toft</a>. Studiet blir gjennomført som et samarbeid mellom <a href="https://www.nve.no/" target="_blank">NVE</a>, <a href="https://uit.no/startsida" target="_blank">UiT</a> og <a href="https://uit.no/research/carepanel" target="_blank">CARE</a>.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
